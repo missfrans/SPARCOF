@@ -58,16 +58,26 @@ bukan bukti bahwa versi refactor menghasilkan angka identik.
   jangka panjang tetap membutuhkan lock file atau export environment dari mesin
   yang menghasilkan angka final.
 
-## Keputusan yang masih harus dibuat penulis
+## Status keputusan publikasi
 
-1. Pilih lisensi kode (misalnya MIT, BSD-3-Clause, Apache-2.0, atau lisensi
-   institusi) setelah memastikan kepemilikan dan kebijakan afiliasi.
-2. Lengkapi `CITATION.cff.template`, URL repository, judul artikel, penulis, DOI,
-   dan versi release.
-3. Pastikan lisensi masing-masing dataset mengizinkan instruksi download dan
-   tidak mengizinkan data mentah ikut di-commit bila memang dibatasi.
-4. Putuskan apakah artikel akan mempertahankan protokol lama (`final_test`) atau
-   melaporkan rerun metodologis baru (`cross_validation`). Keduanya tidak boleh
-   dicampur tanpa penjelasan.
-5. Lakukan full rerun setelah koreksi urutan fitur dan cocokkan seluruh angka
-   artikel, tabel tambahan, serta response-to-reviewer.
+- **Lisensi kode:** telah ditetapkan menggunakan MIT License sebagaimana
+  tercantum dalam file `LICENSE`. Lisensi ini hanya berlaku untuk kode dan
+  dokumentasi repository, bukan untuk dataset penelitian.
+- **Metadata sitasi:** telah disediakan melalui `CITATION.cff`, termasuk judul
+  perangkat lunak, versi, tanggal rilis, penulis, URL repository, dan preferred
+  article citation. DOI artikel akan ditambahkan setelah diterbitkan oleh jurnal.
+- **Provenance dataset:** sumber resmi, tanggal akses, ketentuan penggunaan,
+  file yang digunakan, pemetaan target, kolom yang dikeluarkan, dan prosedur
+  sampling telah didokumentasikan dalam `docs/DATASETS.md`.
+- **Checksum dataset:** SHA-256 dan ukuran setiap file yang digunakan telah
+  dicatat dalam `docs/dataset_sha256.csv`. Dataset mentah tidak didistribusikan
+  dalam repository.
+- **Keputusan metodologis yang tetap harus konsisten dengan artikel:** penulis
+  harus memastikan bahwa penggunaan `scoring.metric_source` pada konfigurasi,
+  hasil yang dilaporkan, manuscript, dan response-to-reviewer merujuk pada
+  protokol yang sama. Hasil dari protokol `final_test` tidak boleh dicampur
+  dengan hasil dari protokol `cross_validation` tanpa penjelasan eksplisit.
+- **Verifikasi hasil sebelum release:** tabel dalam `results/paper/` harus
+  dipastikan berasal dari hasil rerun yang digunakan dalam versi akhir
+  manuscript. Jika tabel tersebut hanya merupakan hasil rujukan lama, statusnya
+  harus tetap dinyatakan secara jelas.
