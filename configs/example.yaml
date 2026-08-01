@@ -1,0 +1,65 @@
+project:
+  name: SPARCOF generic demonstration
+  seed: 42
+  output_dir: outputs/demo
+  n_splits_cv: 3
+  test_size: 0.2
+  timing_repeats: 3
+  timing_warmup: 1
+  gpu_required: false
+  save_models: false
+  n_jobs: -1
+
+datasets:
+  - name: demo
+    display_name: Synthetic tabular demo
+    loader: generic
+    path: data/demo
+    format: csv
+    file_glob: "*.csv"
+    target_col: label
+    task: binary
+    read_options:
+      low_memory: false
+    identifier_columns: [record_id]
+    leakage_columns: []
+    drop_columns: []
+    missing_value_tokens: ["?", "NA"]
+    benign_labels: [normal]
+    shuffle: true
+
+feature_selection:
+  criteria: [q25, q50]
+  max_rows_for_fs: 10000
+  min_features: 2
+  methods:
+    filter: [pearson, chi2, mutual_info, fisher, mrmr]
+    embedded: [lasso_c0.1, rf]
+  focused_methods: [pearson, mutual_info, rf]
+  smoke_methods: [pearson]
+
+model_evaluation:
+  include_original_baselines: false
+  controlled_classifiers: [dt_cpu, linear_svm, rf_cpu]
+  smoke_classifiers: [dt_cpu]
+  max_rows_for_svm: 150000
+  decision_tree:
+    criterion: gini
+    max_depth: null
+    class_weight: balanced
+
+scoring:
+  # Recommended for new studies: select candidates from development CV, while
+  # retaining the untouched holdout metrics for final reporting.
+  metric_source: cross_validation
+  scenarios:
+    equal:
+      effectiveness: {accuracy: 0.2, precision: 0.2, recall: 0.2, f1: 0.2, inv_far: 0.2}
+      efficiency: {inv_training_time: 0.4, inv_inference_time: 0.4, inv_num_features: 0.2}
+    detection_priority:
+      effectiveness: {accuracy: 0.1, precision: 0.1, recall: 0.3, f1: 0.3, inv_far: 0.2}
+      efficiency: {inv_training_time: 0.3, inv_inference_time: 0.5, inv_num_features: 0.2}
+  champion_zones:
+    effectiveness: {effectiveness_quantile_min: 0.67, efficiency_quantile_min: 0.0}
+    balanced: {effectiveness_quantile_min: 0.33, efficiency_quantile_min: 0.33}
+    efficiency: {effectiveness_quantile_min: 0.0, efficiency_quantile_min: 0.67}

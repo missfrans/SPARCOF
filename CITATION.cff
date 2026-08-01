@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated article and this software release."
+title: "REPLACE: SPARCOF reproducible research code"
+type: software
+version: "1.0.0"
+date-released: "2026-08-01"
+authors:
+  - family-names: "Sisilia Mukti"
+    given-names: "Fransiska"
+repository-code: "https://github.com/missfrans/SPARCOF"
+preferred-citation:
+  type: article
+  title: "SPARCOF: A Two-Stage Decision-Support Framework for Efficient Feature Sets in Network Intrusion Detection Dataset"
+  authors:
+    - family-names: "Sisilia Mukti"
+      given-names: "Fransiska"
+  doi: ""

@@ -1,0 +1,182 @@
+project:
+  name: SPARCOF Baseline-Family Controlled Matrix
+  seed: 42
+  output_dir: outputs/full_revision_ciciot_baseline_family
+  n_splits_cv: 10
+  test_size: 0.2
+  timing_repeats: 30
+  timing_warmup: 5
+  gpu_required: false
+  save_models: false
+  n_jobs: -1
+paths:
+  unsw_dir: data/raw/UNSW-NB15/CSV_Files
+  hikari_dir: data/raw/HIKARI2021
+  ciciot_dir: data/raw/CICIoT2023/dataset
+datasets:
+- name: ciciot
+  display_name: CICIoT-2023
+  target_col: Label
+  task: binary
+feature_selection:
+  criteria:
+  - elbow
+  - q25
+  - q50
+  - q75
+  max_rows_for_fs: 100000
+  min_features: 3
+  methods:
+    filter:
+    - pearson
+    - chi2
+    - mutual_info
+    - fisher
+    - reliefF
+    - mrmr
+    embedded:
+    - lasso_c0.01
+    - lasso_c0.1
+    - lasso_c1.0
+    - elasticnet_c0.1
+    - elasticnet_c1.0
+    - rf
+    - xgboost
+    - lightgbm
+    wrapper:
+    - rfe
+    - rfecv
+    - boruta
+    metaheuristic:
+    - ga
+    - pso
+    hybrid:
+    - mi_rfe
+    - chi2_boruta
+    - chi2_xgboost
+    - fisher_lightgbm
+    - mi_ga
+  focused_methods:
+  - pearson
+  - mutual_info
+  - mrmr
+  - elasticnet_c1.0
+  - rf
+  - lightgbm
+  - boruta
+  - mi_rfe
+  - mi_ga
+  smoke_methods:
+  - pearson
+  - mutual_info
+  - rf
+model_evaluation:
+  include_original_baselines: false
+  controlled_classifiers:
+  - cnn1d_gpu
+  - svm_linear_gpu
+  - dt_cpu
+  original_baselines:
+    unsw: cnn1d_gpu
+    hikari: svm_cpu
+    ciciot: dt_cpu
+  smoke_classifiers:
+  - svm_linear_gpu
+  max_rows_for_svm: 150000
+  svm:
+    kernel: rbf
+    C: 1.0
+    gamma: scale
+    class_weight: balanced
+  svm_linear_gpu:
+    epochs: 15
+    batch_size: 4096
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    margin: 1.0
+  decision_tree:
+    criterion: gini
+    max_depth: null
+    class_weight: balanced
+  mlp:
+    epochs: 20
+    batch_size: 1024
+    learning_rate: 0.001
+    hidden_layers:
+    - 256
+    - 128
+  cnn1d:
+    epochs_cv: 30
+    epochs_final: 50
+    batch_size: 1024
+    learning_rate: 0.002
+    optimizer: sgd
+    binary_one_logit: true
+scoring:
+  metric_source: final_test
+  scenarios:
+    equal:
+      effectiveness:
+        accuracy: 0.2
+        precision: 0.2
+        recall: 0.2
+        f1: 0.2
+        inv_far: 0.2
+      efficiency:
+        inv_training_time: 0.4
+        inv_inference_time: 0.4
+        inv_num_features: 0.2
+    detection_priority:
+      effectiveness:
+        accuracy: 0.1
+        precision: 0.1
+        recall: 0.3
+        f1: 0.3
+        inv_far: 0.2
+      efficiency:
+        inv_training_time: 0.3
+        inv_inference_time: 0.5
+        inv_num_features: 0.2
+    far_priority:
+      effectiveness:
+        accuracy: 0.1
+        precision: 0.1
+        recall: 0.2
+        f1: 0.2
+        inv_far: 0.4
+      efficiency:
+        inv_training_time: 0.3
+        inv_inference_time: 0.5
+        inv_num_features: 0.2
+    latency_priority:
+      effectiveness:
+        accuracy: 0.2
+        precision: 0.2
+        recall: 0.2
+        f1: 0.2
+        inv_far: 0.2
+      efficiency:
+        inv_training_time: 0.2
+        inv_inference_time: 0.65
+        inv_num_features: 0.15
+    feature_compactness_priority:
+      effectiveness:
+        accuracy: 0.2
+        precision: 0.2
+        recall: 0.2
+        f1: 0.2
+        inv_far: 0.2
+      efficiency:
+        inv_training_time: 0.2
+        inv_inference_time: 0.3
+        inv_num_features: 0.5
+  champion_zones:
+    effectiveness:
+      effectiveness_quantile_min: 0.67
+      efficiency_quantile_min: 0.0
+    balanced:
+      effectiveness_quantile_min: 0.33
+      efficiency_quantile_min: 0.33
+    efficiency:
+      effectiveness_quantile_min: 0.0
+      efficiency_quantile_min: 0.67

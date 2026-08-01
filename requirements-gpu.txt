@@ -1,0 +1,7 @@
+-r requirements.txt
+torch>=2.1
+
+# Install versions compatible with the local CUDA runtime when these backends
+# are requested by a paper configuration:
+# cupy-cuda12x
+# RAPIDS cuML (follow the official RAPIDS compatibility matrix)
