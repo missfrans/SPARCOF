@@ -46,7 +46,7 @@ was checked on **2026-08-01**.
   - The provider's pre-made `UNSW_NB15_training-set.csv` and
     `UNSW_NB15_testing-set.csv` are **not** used; SPARCOF concatenates the four
     full CSV files and creates its own deterministic split.
-- **Provider checksum(s):** The provider does not publish checksums on the canonical landing page. Local SHA-256 checksums are recorded in `dataset_sha256.csv`.
+- **Provider checksum(s):** The provider does not publish checksums on the canonical landing page. Local SHA-256 checksums are recorded in [`dataset_sha256.csv`](dataset_sha256.csv).
 - **Target definition and mapping:** binary classification using `label`, where
   `0 = Normal/Benign` and `1 = Attack`. `positive_label: 1` identifies the attack
   class as positive.
@@ -71,11 +71,13 @@ was checked on **2026-08-01**.
   (`Bruteforce`, `Bruteforce-XML`, `Probing`, and `XMRIGCC CryptoMiner`).
 - **Date accessed/downloaded:** 2026-01-03
 - **License/terms:** The HIKARI-2021 Zenodo v1 record states CC BY 4.0. Version 1.3.5 was used in this study. Raw dataset files are not redistributed; researchers must obtain them from the version-specific Zenodo record.
-- **Files used by this pipeline:** extracted
-  `data/raw/HIKARI2021/ALLFLOWMETER_HIKARI2021.csv`. The generic loader reads and
-  concatenates every `*.csv` in this directory, so no unrelated CSV file may be
-  stored there. The PKL, PCAP, and ground-truth archives are not read by SPARCOF.
-- **Provider checksum(s):** Zenodo MD5 for `ALLFLOWMETER_HIKARI2021.csv.zip`: `d7d9e277fe4a66cb00764d7f91a810dd`. Local SHA-256 checksums are recorded in `dataset_sha256.csv`.
+- **Files used by this pipeline:** local file
+  `data/raw/HIKARI2021/HIKARI2021.csv`, which is the study's locally renamed
+  and extracted copy of the provider file `ALLFLOWMETER_HIKARI2021.csv`.
+  The generic loader reads and concatenates every `*.csv` in this directory,
+  so no unrelated CSV file may be stored there. The PKL, PCAP, and
+  ground-truth archives are not read by SPARCOF.
+- **Provider checksum(s):** Zenodo MD5 for `ALLFLOWMETER_HIKARI2021.csv.zip`: `d7d9e277fe4a66cb00764d7f91a810dd`. Local SHA-256 checksums are recorded in [`dataset_sha256.csv`](dataset_sha256.csv).
 - **Target definition and mapping:** binary classification using `Label`, where
   the official definition is `0 = Benign` and `1 = Attack`. The categorical
   `traffic_category` column is not used as the target. Consequently, the paper
@@ -102,11 +104,11 @@ was checked on **2026-08-01**.
   supplementary-material directories; SPARCOF uses only the extracted CSV data.
 - **Date accessed/downloaded:** 2026-01-03
 - **License/terms:** The official UNB/CIC landing page does not state an explicit redistribution license. Raw dataset files are therefore not included in this repository. Researchers must obtain the dataset directly from UNB/CIC and comply with the applicable download terms.
-- **Files used by this pipeline:** all files matching
-  `data/raw/CICIoT2023/dataset/*.csv`, sorted by filename and concatenated. Keep
-  only the intended official CSV partitions in this directory and record their
-  exact names in the checksum manifest. PCAP files are not read.
-- **Provider checksum(s):** The provider does not publish checksums on the canonical landing page. Local SHA-256 checksums are recorded in `dataset_sha256.csv`.
+- **Files used by this pipeline:** five local analysis partitions:
+  `Merged01.csv`, `Merged02.csv`, `Merged03.csv`, `Merged04.csv`, and
+  `Merged05.csv`, stored under `data/raw/CICIoT2023/dataset/`. The files are
+  sorted by filename and concatenated by the pipeline. PCAP files are not read.
+- **Provider checksum(s):** The provider does not publish checksums on the canonical landing page. Local SHA-256 checksums are recorded in [`dataset_sha256.csv`](dataset_sha256.csv).
 - **Target definition and mapping:** binary classification using `Label`. Values
   equal to `Benign` (case-insensitive) or `0` map to `Benign`; every other raw
   label maps to `Attack`. This collapses the provider's individual attacks and
