@@ -171,18 +171,34 @@ For archival-grade provenance, also record provider-issued byte checksums in
 `docs/DATASETS.md`; the fast runtime fingerprint is not a replacement for a
 published SHA-256 checksum.
 
-## 6. Publish to GitHub
+## 6. Public availability and reproducibility
 
-Follow [the step-by-step Indonesian release guide](docs/GITHUB_RELEASE_GUIDE_ID.md).
-Before making the repository public, the authors must replace the citation and
-code-availability placeholders, choose a software license, verify dataset terms,
-remove secrets/large raw data, rerun tests, and create a versioned release tied
-to the manuscript.
+This repository is publicly available at
+[https://github.com/missfrans/SPARCOF](https://github.com/missfrans/SPARCOF).
+
+It contains the SPARCOF source code, paper configurations, automated tests,
+dataset provenance records, and reference result tables required to inspect
+and reproduce the study workflow. Raw research datasets are not redistributed
+because their use remains subject to the terms of the original providers.
+Researchers must obtain UNSW-NB15, HIKARI-2021, and CICIoT-2023 directly from
+their official sources and place them in the paths documented in
+[`docs/DATASETS.md`](docs/DATASETS.md).
+
+Automated installation, unit testing, configuration validation, and a
+synthetic CPU smoke test are executed through GitHub Actions. These automated
+checks validate the software workflow but do not replace a full rerun using
+the original research datasets.
+
+For the manuscript-associated snapshot, use the tagged GitHub release
+`v1.0.0`.
 
 ## Citation and license
 
-`CITATION.cff.template` is intentionally a template because author names, DOI,
-repository URL, and manuscript title were not provided. Rename it to
-`CITATION.cff` only after completing it. No software license has been selected on
-the authors' behalf; without a license, public viewers do not automatically have
-permission to reuse the code.
+Citation metadata is provided in [`CITATION.cff`](CITATION.cff). When using
+this repository, please cite both the associated article and the corresponding
+versioned software release.
+
+The SPARCOF source code is distributed under the
+[MIT License](LICENSE). This software license applies only to the repository
+code and documentation; it does not change or replace the licenses and terms
+of the three research datasets.
